@@ -64,7 +64,7 @@ class PostList extends StatelessWidget {
               onTap: () {
                 Navigator.of(context).push(
                   new MaterialPageRoute(
-                    builder: (c) {
+                    builder: (context) {
                       return new PostDetailPage(document.documentID);
                       }
                     )
