@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'new_post.dart';
+import 'post_detail.dart';
 
 void main() => runApp(new MyApp());
 
@@ -17,6 +18,7 @@ class MyApp extends StatelessWidget {
       home: new MyHomePage(title: 'Home Page'),
       routes: <String, WidgetBuilder> {
        "/newPostPage": (BuildContext context) => new NewPostPage(),
+       "/postDetailPage": (BuildContext context) => new PostDetailPage("fff"),
      },
     );
   }
@@ -59,6 +61,17 @@ class PostList extends StatelessWidget {
         return new ListView(
           children: snapshot.data.documents.map((DocumentSnapshot document) {
             return new ListTile(
+              onTap: () {
+                Navigator.of(context).push(
+                  new MaterialPageRoute(
+                    builder: (c) {
+                      return new PostDetailPage(document.documentID);
+                      }
+                    )
+                );
+                print(document.documentID);
+                },
+              onLongPress: () {print("wanna delete?");},
               title: new Text(document['message']),
               subtitle: new Text(document['createdAt']),
             );
