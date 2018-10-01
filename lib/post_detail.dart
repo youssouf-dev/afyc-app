@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class PostDetailPage extends StatefulWidget {
-  final String documentId;
+  final DocumentSnapshot document;
 
   PostDetailPage(
-    this.documentId,
+    this.document,
   );
 
   @override
@@ -28,8 +28,8 @@ class _PostDetailPageState extends State<PostDetailPage> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text("New Post page"), 
-        backgroundColor: Colors.deepOrange
+        title: new Text("Post Detail page"), 
+        backgroundColor: Colors.lightGreen
       ),
       body: new Container(
         child: new Center(
@@ -37,7 +37,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               // new IconButton(icon: new Icon(Icons.home, color: Colors.deepOrange), iconSize: 70.0, onPressed: null),
-              // new Text("New Post Page"),
+              new Text(widget.document.documentID),
               new Container(
                 padding: const EdgeInsets.all(10.0),
                 child: new TextField(
@@ -49,7 +49,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
                 ),
               ),
               new RaisedButton(
-                color: Colors.deepOrange,
+                color: Colors.lightGreen,
                 textColor: Colors.white,
                 onPressed: () {
                   if(_post.length == 0) {

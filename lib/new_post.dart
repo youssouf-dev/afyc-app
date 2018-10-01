@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class NewPostPage extends StatefulWidget {
   @override
@@ -9,6 +10,21 @@ class NewPostPage extends StatefulWidget {
 
 class _NewPostPageState extends State<NewPostPage> {
   String _post = "";
+  String _myUsername = "";
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUsername();
+  }
+
+  //Loading the current username on start
+  _loadUsername() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _myUsername = (prefs.getString('username') ?? "+_+");
+    });
+  }
 
   Future<Null> _savePost(value) async {
   setState(() {
@@ -57,13 +73,15 @@ class _NewPostPageState extends State<NewPostPage> {
                       .document()
                       .setData({ 
                         'message': _post, 
-                        'createdAt': _createdAt 
+                        'createdAt': _createdAt,
+                        'author': _myUsername 
                       });
 
                     //return to the previous screen
                     Navigator.pop(context);
 
                     print("Post is: $_post");
+                    print("Author is: $_myUsername");
                     print("Posted time: $_createdAt");
                   }
                 },
